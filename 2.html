@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Воспоминания</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: sans-serif;
+      background: black;
+      color: white;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .background.fade-out {
+      opacity: 0;
+      transform: translateY(100%);
+      z-index: -1;
+    }
+
+    .overlay {
+      position: fixed; /* Changed to fixed to ensure single instance */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .text-box {
+      position: absolute;
+      left: 5%;
+      top: 35%;
+      transform: translateY(0);
+      z-index: 2;
+      max-width: 400px;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 192, 203, 0.5);
+      border-radius: 1rem;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .text-box.fade-out {
+      opacity: 0;
+    }
+
+    .text-box h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .text-box p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .thumbnails {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 3;
+      width: calc(50% - 1rem);
+    }
+
+    .thumbnail {
+      width: calc(50vw - 2rem);
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .thumbnail:nth-child(3) {
+      opacity: 0.3;
+      transform: translateX(20%);
+    }
+
+    .thumbnail:hover,
+    .thumbnail.active {
+      opacity: 1;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 192, 203, 0.7);
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2rem;
+      z-index: 3;
+    }
+
+    .button {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 192, 203, 0.3);
+      border: 2px solid rgba(255, 192, 203, 0.7);
+      border-radius: 50%;
+      cursor: pointer;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: rgba(255, 192, 203, 0.5);
+    }
+
+    .button.active {
+      background: rgba(255, 192, 203, 0.5);
+    }
+
+    @keyframes thumbnail-drop-down {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100px) scale(0.9);
+        opacity: 0;
+      }
+    }
+
+    @keyframes expand-from-thumbnail {
+      0% {
+        transform: translate(var(--start-x), var(--start-y)) scale(var(--start-scale));
+        opacity: 1;
+      }
+      100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .thumbnail.animate-down {
+      animation: thumbnail-drop-down 0.5s ease forwards;
+      z-index: 5;
+    }
+
+    .transition-img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 2;
+      animation: expand-from-thumbnail 0.8s ease forwards;
+      pointer-events: none;
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 768px) {
+      .text-box {
+        left: 50%;
+        top: 10%;
+        transform: translateX(-50%);
+        max-width: 80%;
+        padding: 1rem;
+      }
+  .back-button {
+    top: 15px;
+    left: 15px;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+  }
+      .text-box h2 {
+        font-size: 1.5rem;
+      }
+
+      .text-box p {
+        font-size: 0.9rem;
+      }
+
+      .thumbnails {
+        top: 60%;
+        width: 90%;
+        gap: 0.5rem;
+      }
+
+      .thumbnail {
+        width: 30%;
+        height: 100px;
+      }
+
+      .thumbnail:nth-child(3) {
+        transform: translateX(10%);
+      }
+
+      .buttons {
+        bottom: 5%;
+        gap: 1.5rem;
+      }
+
+      .button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .text-box {
+        max-width: 90%;
+        padding: 0.8rem;
+      }
+  .back-button {
+    top: 12px;
+    left: 12px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem;
+  }
+      .text-box h2 {
+        font-size: 1.2rem;
+      }
+
+      .text-box p {
+        font-size: 0.8rem;
+      }
+
+      .thumbnails {
+        top: 65%;
+        width: 95%;
+        gap: 0.3rem;
+      }
+
+      .thumbnail {
+        width: 28%;
+        height: 70px;
+      }
+
+      .thumbnail:nth-child(3) {
+        transform: translateX(5%);
+      }
+
+      .buttons {
+        bottom: 3%;
+        gap: 1rem;
+      }
+
+      .button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+    }
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(255, 192, 203, 0.3);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid rgba(255, 192, 203, 0.7);
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.back-button:hover {
+  background: rgba(255, 192, 203, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(255, 192, 203, 0.6);
+}
+
+  </style>
+</head>
+<body>
+<a href="index.html" class="back-button">← НАЗАД</a>
+
+  <div class="overlay"></div>
+
+  <div class="text-box" id="text-box">
+
+  </div>
+
+  <div class="thumbnails">
+    <img src="images/1.png" class="thumbnail active" onclick="selectImage(0)" alt="Thumbnail 1" />
+    <img src="images/2.jpg" class="thumbnail" onclick="selectImage(1)" alt="Thumbnail 2" />
+    <img src="images/4.png" class="thumbnail" onclick="selectImage(2)" alt="Thumbnail 3" />
+	<img src="images/3.png" class="thumbnail" onclick="selectImage(2)" alt="Thumbnail 3" />
+    <img src="images/5.png" class="thumbnail" onclick="selectImage(2)" alt="Thumbnail 3" />
+  </div>
+
+  <div class="buttons">
+    <button class="button active" onclick="prevImage()">❤️</button>
+    <button class="button" onclick="nextImage()">❤️</button>
+  </div>
+
+  <script>
+    const texts = [
+      {
+        title: 'К большими мечтами — к новым горизонтам',
+        content: 'Мечтаешь уехать в Нидерланды, начать всё с нуля и зарабатывать достойно. Ты всегда мечтаешь о большем — и я верю, что у тебя всё получится.'
+      },
+      {
+        title: 'Твои первые шаги к успеху',
+        content: 'Ты сидела с телефоном, тапала по экрану в своих крипто-игрушках и реально зарабатывала денюжку. Помню, как ты радовалась каждому центу — будто это уже полпути к миллиону.'
+      },
+      {
+        title: 'Когда упорство творит чудеса',
+        content: 'Ты пробовала, ошибалась, но не сдавалась. И вот — из обычных деревянных палочек получилось настоящее колесо обозрения! Маленькое чудо, сделанное своими руками, — доказательство того, что терпение и желание творить способны на многое.'
+      },
+	  {
+        title: 'Шаг навстречу лучшей версии себя',
+        content: 'Ты оставила позади всё, что мешало, и выбрала заботу о себе. Зал стал твоим новым привычным местом силы и вдохновения. Это большой путь, и я горжусь тобой!'
+      },
+	  {
+        title: 'Wi-Fi отключение — маленькое приключение',
+        content: 'Ты отключала устройства от вай-фая, и папа немного сердился — это было как забавное маленькое испытание для всех. В конце концов, всё обошлось.'
+      },
+	  {
+        title: 'Вкус начинается с желания',
+        content: 'Осваиваешь кулинарию и неплохо получается. Особенно вкусно выходят солёные закуски. Впереди ещё много вкусных открытий!'
+      }
+    ];
+
+    let images = [
+      'images/1.png',
+      'images/2.jpg',
+      'images/4.png',
+	  'images/3.png',
+	  'images/5.png',
+	  'images/6.png'
+    ];
+
+    function updateDisplay(index = 0, fromThumbnail = false) {
+      const textBox = document.getElementById('text-box');
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      const selectedThumbnail = thumbnails[index];
+
+      // Получаем координаты миниатюры
+      const rect = selectedThumbnail.getBoundingClientRect();
+      const startX = rect.left;
+      const startY = rect.top;
+      const startScale = rect.width / window.innerWidth;
+
+      // Создаём анимационное изображение
+      const animImg = document.createElement('img');
+      animImg.src = images[0];
+      animImg.className = 'transition-img';
+      animImg.style.setProperty('--start-x', `${startX}px`);
+      animImg.style.setProperty('--start-y', `${startY}px`);
+      animImg.style.setProperty('--start-scale', startScale);
+      document.body.appendChild(animImg);
+
+      // Убираем все старые фоны
+      const oldBgs = document.querySelectorAll('.background');
+      oldBgs.forEach(bg => {
+        bg.classList.add('fade-out');
+        setTimeout(() => bg.remove(), 1000);
+      });
+
+      // Устанавливаем новый фон
+      setTimeout(() => {
+        const newBg = document.createElement('div');
+        newBg.className = 'background';
+        newBg.style.backgroundImage = `url('${images[0]}')`;
+        document.body.insertBefore(newBg, document.querySelector('.overlay'));
+        animImg.remove();
+      }, 800);
+
+      // Плавно скрываем текст
+      textBox.classList.add('fade-out');
+
+      // Ждём, пока текст исчезнет, затем обновляем
+      setTimeout(() => {
+        textBox.innerHTML = `<h2>${texts[0].title}</h2><p>${texts[0].content}</p>`;
+        textBox.classList.remove('fade-out');
+      }, 400);
+
+      // Обновление миниатюр
+      thumbnails.forEach((thumb, i) => {
+        thumb.src = images[i % images.length];
+        thumb.classList.toggle('active', i === 0);
+      });
+
+      updateButtons();
+    }
+
+    function nextImage() {
+      images.push(images.shift());
+      texts.push(texts.shift());
+      updateDisplay();
+    }
+
+    function prevImage() {
+      images.unshift(images.pop());
+      texts.unshift(texts.pop());
+      updateDisplay();
+    }
+
+    function selectImage(index) {
+      while (index !== 0) {
+        images.push(images.shift());
+        texts.push(texts.shift());
+        index--;
+      }
+      updateDisplay(0, true);
+    }
+
+    function updateButtons() {
+      const buttons = document.querySelectorAll('.button');
+      buttons[0].classList.toggle('active', true);
+      buttons[1].classList.toggle('active', false);
+    }
+
+    // Preload images
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    // Запуск после загрузки
+    window.onload = () => {
+      updateDisplay();
+    };
+  </script>
+</body>
+</html>

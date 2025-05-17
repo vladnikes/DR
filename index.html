@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 26th Birthday!</title>
+  <style>
+body {
+  margin: 0;
+  background: url('images/i.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  margin: 0.5em 0;
+  z-index: 2;
+}
+
+.top-text {
+  color: #00ff80;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.number {
+  font-size: 4em;
+  font-weight: bold;
+  color: #44ff88;
+  animation: blink 1s infinite alternate;
+}
+
+.birthday-text {
+  font-size: 2em;
+}
+.cake {
+  position: absolute;
+  top: 10px;
+  width: 20vw;
+  max-width: 150px;
+  z-index: 2;
+}
+.balloons {
+  top: -250px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1000px;
+  z-index: 2;
+  margin-bottom: 1em;
+}
+
+.balloon {
+  width: 20vw;
+  max-width: 100px;
+  animation-name: float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+	
+.balloon:nth-child(2) { animation-delay: 0.5s; }
+.balloon:nth-child(3) { animation-delay: 1s; }
+.balloon:nth-child(4) { animation-delay: 1.5s; }
+.fireworks {
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2em;
+  margin-top: 1em;
+}
+.letter {
+  display: inline-block;
+  font-size: 4rem;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(-100px) rotate(15deg);
+}
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.balloon-wrapper {
+  position: relative;
+}
+
+.balloon-wrapper.high {
+  top: -60px;
+}
+.balloon-wrapper:nth-child(1) .balloon {
+  animation-duration: 3s;
+  animation-delay: 0s;
+}
+
+.balloon-wrapper:nth-child(2) .balloon {
+  animation-duration: 3.4s;
+  animation-delay: 0.6s;
+}
+
+.balloon-wrapper:nth-child(3) .balloon {
+  animation-duration: 2.7s;
+  animation-delay: 1s;
+}
+
+.balloon-wrapper:nth-child(4) .balloon {
+  animation-duration: 3.1s;
+  animation-delay: 0.3s;
+}
+.memories-wrapper {
+  position: absolute;
+  bottom: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  gap: 20px;
+  padding: 0 1em;
+}
+.memories-button {
+  padding: 12px 24px;
+  font-size: 2em;
+  color: #fff;
+  background: linear-gradient(135deg, #00ffcc, #0066ff);
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(0,255,200,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floatButton 3s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
+}
+
+.memories-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(0,255,200,0.9);
+}
+.memories-gif {
+  width: 100px;
+  height: 100px;
+  animation: floatGif 3s ease-in-out infinite;
+}
+@keyframes floatButton {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,255,200,0.5); }
+  50% { box-shadow: 0 0 30px rgba(0,255,200,0.9); }
+}
+@keyframes floatGif {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+/* Адаптация под мобильные */
+@media (max-width: 600px) {
+  .letter {
+    font-size: 2.5rem;
+  }
+
+  .memories-button {
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+
+  .memories-gif {
+    width: 50px;
+    height: 50px;
+  }
+
+  .cake {
+    width: 25vw;
+  }
+
+  .balloon {
+    width: 15vw;
+    max-width: 100px;
+  }
+}
+  </style>
+</head>
+<body>
+  <img src="images/birthday-cake-1.png" class="cake" alt="Birthday Cake">
+
+  <!-- Новый блок с анимацией текста -->
+  <div class="container" id="container"></div>
+  <div class="container" id="container2"></div>
+
+<div class="balloons">
+  <div class="balloon-wrapper">
+    <img src="images/balloon.png" class="balloon" alt="Balloon">
+  </div>
+  <div class="balloon-wrapper high">
+    <img src="images/balloon1.png" class="balloon" alt="Balloon">
+  </div>
+  <div class="balloon-wrapper high">
+    <img src="images/balloon2.png" class="balloon" alt="Balloon">
+  </div>
+  <div class="balloon-wrapper">
+    <img src="images/balloon3.png" class="balloon" alt="Balloon">
+  </div>
+</div>
+
+  <canvas class="fireworks"></canvas>
+<div class="memories-wrapper">
+  <img src="images/bubu1.gif" alt="bubu" class="memories-gif">
+  <a href="2.html" class="memories-button">Воспоминания</a>
+  <img src="images/bubu.gif" alt="bubu" class="memories-gif">
+</div>
+<script>
+  const text = "С Днём Рождения!";
+  const text2 = "16";
+  const container = document.getElementById('container');
+  const container2 = document.getElementById('container2');
+
+  const colors = [
+    ['#FFD700', '#FFA500'],
+    ['#FFA500', '#FF4500'],
+    ['#FF69B4', '#C71585'],
+    ['#800080', '#4B0082'],
+    ['#0000FF', '#1E90FF'],
+    ['#00CED1', '#40E0D0'],
+    ['#008000', '#32CD32'],
+  ];
+
+  function animateText(text, container, delayOffset = 0) {
+    text.split('').forEach((char, index) => {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      const gradient = colors[index % colors.length];
+      span.style.background = `linear-gradient(45deg, ${gradient[0]}, ${gradient[1]})`;
+      span.style.webkitBackgroundClip = 'text';
+      span.style.webkitTextFillColor = 'transparent';
+      container.appendChild(span);
+    });
+
+    const letters = container.querySelectorAll('.letter');
+    letters.forEach((letter, index) => {
+      setTimeout(() => {
+        const gradient = colors[index % colors.length];
+        for (let i = 0; i < 20; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.background = `linear-gradient(45deg, ${gradient[0]}, ${gradient[1]})`;
+          container.appendChild(particle);
+
+          const angle = Math.random() * Math.PI * 2;
+          const velocity = 50 + Math.random() * 100;
+          const x = letter.offsetLeft + letter.offsetWidth / 2;
+          const y = letter.offsetTop + letter.offsetHeight / 2;
+
+          particle.style.left = x + 'px';
+          particle.style.top = y + 'px';
+
+          setTimeout(() => {
+            particle.style.transition = 'all 1s ease-out';
+            particle.style.transform = `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px)`;
+            particle.style.opacity = '0';
+            setTimeout(() => particle.remove(), 1000);
+          }, 0);
+        }
+
+        letter.style.transition = 'all 0.5s ease-out';
+        letter.style.opacity = '1';
+        letter.style.transform = 'translateY(0) rotate(0)';
+      }, (index * 200) + delayOffset);
+    });
+  }
+
+  animateText(text, container, 0);
+  animateText(text2, container2, text.length * 200 + 500);
+</script>
+
+<script>
+  const canvas = document.querySelector('.fireworks');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let rockets = [];
+  let particles = [];
+
+  function launchRocket() {
+    const x = Math.random() * canvas.width;
+    rockets.push({ x, y: canvas.height, speed: Math.random() * 3 + 5, exploded: false });
+  }
+
+  function explode(x, y) {
+    const count = 60;
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2) * (i / count);
+      const speed = Math.random() * 3 + 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particles.push({
+        x, y,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        alpha: 1,
+        color
+      });
+    }
+  }
+
+  function animateFireworks() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    rockets.forEach((rocket, i) => {
+      rocket.y -= rocket.speed;
+      ctx.fillStyle = 'white';
+      ctx.fillRect(rocket.x, rocket.y, 2, 10);
+
+      if (rocket.y < canvas.height / 2 + Math.random() * 100 && !rocket.exploded) {
+        explode(rocket.x, rocket.y);
+        rocket.exploded = true;
+        rockets.splice(i, 1);
+      }
+    });
+
+    particles.forEach((p, i) => {
+      p.x += p.dx;
+      p.y += p.dy;
+      p.alpha -= 0.01;
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+        return;
+      }
+      // Проверяем, что цвет корректен
+      try {
+        const rgb = hexToRgb(p.color);
+        ctx.fillStyle = `rgba(${rgb},${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      } catch (e) {
+        console.error('Error rendering particle:', e, p);
+      }
+    });
+
+    requestAnimationFrame(animateFireworks);
+  }
+
+  function hexToRgb(hex) {
+    // Проверяем, что hex - строка и начинается с #
+    if (typeof hex !== 'string' || !hex.startsWith('#')) {
+      console.warn('Invalid hex color:', hex);
+      return '255,255,255'; // Белый цвет по умолчанию
+    }
+    try {
+      const bigint = parseInt(hex.slice(1), 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `${r},${g},${b}`;
+    } catch (e) {
+      console.warn('Error parsing hex color:', hex);
+      return '255,255,255'; // Белый цвет по умолчанию
+    }
+  }
+
+  setInterval(launchRocket, 1000);
+  animateFireworks();
+</script>
+</body>
+</html>
