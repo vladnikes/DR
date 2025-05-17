@@ -52,11 +52,11 @@
 
     .text-box {
       position: fixed;
-      top: 15%;
+      top: 20%;
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      max-width: 90%;
+      max-width: 100%;
       padding: 1.5rem;
       background: rgba(0, 0, 0, 0.6);
       border: 2px solid rgba(255, 192, 203, 0.5);
@@ -89,18 +89,18 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
       z-index: 3;
-      width: 90%;
+      width: 100%;
       justify-content: center;
     }
 
     .thumbnail {
       width: 25%;
-      max-width: 100px;
-      height: 80px;
+      max-width: 130px;
+      height: 120px;
       object-fit: cover;
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       cursor: pointer;
       opacity: 0.7;
       transition: transform 0.3s, opacity 0.3s;
@@ -190,7 +190,11 @@
     @media (max-width: 768px) {
       .text-box {
         top: 12%;
-        padding: 1.2rem;
+        padding: 1.5rem;
+        min-height: 200px; /* Increased vertical size */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .text-box h2 {
@@ -199,6 +203,7 @@
 
       .text-box p {
         font-size: 1rem;
+        line-height: 1.7; /* Slightly increased for readability */
       }
 
       .thumbnails {
@@ -230,7 +235,11 @@
     @media (max-width: 480px) {
       .text-box {
         top: 10%;
-        padding: 1rem;
+        padding: 1.2rem;
+        min-height: 220px; /* Further increased vertical size for smaller screens */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .text-box h2 {
@@ -239,6 +248,7 @@
 
       .text-box p {
         font-size: 0.9rem;
+        line-height: 1.8; /* Increased for better readability */
       }
 
       .thumbnails {
