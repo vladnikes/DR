@@ -60,7 +60,7 @@ h1, h2, h3 {
   max-width: 1000px;
   z-index: 2;
   margin-bottom: 1em;
-  top: clamp(-200px, -30vw, -150px);
+  top: clamp(-350px, -50vw, -150px);
 }
 
 .balloon {
@@ -205,6 +205,8 @@ h1, h2, h3 {
   50% { transform: translateY(-6px); }
 }
 
+
+
 /* Enhanced Mobile Adaptation */
 @media (max-width: 768px) {
   body {
@@ -213,11 +215,11 @@ h1, h2, h3 {
 
   .cake {
     width: clamp(12vw, 18vw, 120px);
-    top: 150px;
+    top: 100px;
   }
 
   .balloons {
-    top: clamp(-150px, -25vw, -100px);
+    top: clamp(-250px, -50vw, -100px);
     justify-content: space-evenly;
   }
 
@@ -261,11 +263,11 @@ h1, h2, h3 {
 
   .cake {
     width: clamp(10vw, 15vw, 100px);
-	top: 250px;
+	top: 200px;
   }
 
   .balloons {
-    top: clamp(-120px, -20vw, -80px);
+    top: clamp(-200px, -40vw, -80px);
   }
 
   .balloon {
@@ -302,6 +304,11 @@ h1, h2, h3 {
 
   <div class="container" id="container"></div>
   <div class="container" id="container2"></div>
+<div id="lifetime-counter" style="margin-top: 2em; font-size: clamp(1.2em, 4vw, 2em); color: #00ffcc; z-index: 2;">
+  С тех пор, как ты появилась на свет: <br> <span id="days">0000</span> дней <span id="hours">00</span> часов <span id="minutes">00</span> минут <span id="seconds">00</span> секунд
+</div>
+
+
 
   <div class="balloons">
     <div class="balloon-wrapper">
@@ -324,6 +331,28 @@ h1, h2, h3 {
     <a href="2.html" class="memories-button">Воспоминания</a>
     <img src="images/bubu.gif" alt="bubu" class="memories-gif">
   </div>
+  <script>
+function updateLifetimeCounter() {
+  const birthDate = new Date(2009, 4, 23); // Месяцы с 0 (май — это 4)
+  const now = new Date();
+  const diff = now - birthDate;
+
+  const totalSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(totalSeconds / (3600 * 24));
+  const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  document.getElementById('days').textContent = days;
+  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+setInterval(updateLifetimeCounter, 1000);
+updateLifetimeCounter();
+
+  </script>
 
 <script>
   const text = "С Днём Рождения!";
