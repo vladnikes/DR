@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy 26th Birthday!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>С днем рождения 16</title>
   <style>
 body {
   margin: 0;
@@ -11,7 +11,7 @@ body {
   background-size: cover;
   font-family: 'Arial', sans-serif;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,27 +30,29 @@ h1, h2, h3 {
 .top-text {
   color: #00ff80;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: clamp(1em, 4vw, 1.2em);
 }
+
 .number {
-  font-size: 4em;
+  font-size: clamp(2.5em, 8vw, 4em);
   font-weight: bold;
   color: #44ff88;
   animation: blink 1s infinite alternate;
 }
 
 .birthday-text {
-  font-size: 2em;
+  font-size: clamp(1.5em, 5vw, 2em);
 }
+
 .cake {
   position: absolute;
   top: 10px;
-  width: 20vw;
+  width: clamp(15vw, 20vw, 150px);
   max-width: 150px;
   z-index: 2;
 }
+
 .balloons {
-  top: -250px;
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -58,19 +60,21 @@ h1, h2, h3 {
   max-width: 1000px;
   z-index: 2;
   margin-bottom: 1em;
+  top: clamp(-200px, -30vw, -150px);
 }
 
 .balloon {
-  width: 20vw;
+  width: clamp(10vw, 15vw, 100px);
   max-width: 100px;
   animation-name: float;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
-	
+
 .balloon:nth-child(2) { animation-delay: 0.5s; }
 .balloon:nth-child(3) { animation-delay: 1s; }
 .balloon:nth-child(4) { animation-delay: 1.5s; }
+
 .fireworks {
   background: transparent;
   position: fixed;
@@ -81,6 +85,7 @@ h1, h2, h3 {
   pointer-events: none;
   z-index: 0;
 }
+
 @keyframes float {
   0% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
@@ -91,18 +96,20 @@ h1, h2, h3 {
   0% { opacity: 1; }
   100% { opacity: 0.3; }
 }
+
 .container {
   position: relative;
   z-index: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.2em;
+  gap: clamp(0.1em, 1vw, 0.2em);
   margin-top: 1em;
 }
+
 .letter {
   display: inline-block;
-  font-size: 4rem;
+  font-size: clamp(2rem, 8vw, 4rem);
   font-weight: bold;
   opacity: 0;
   transform: translateY(-100px) rotate(15deg);
@@ -115,13 +122,15 @@ h1, h2, h3 {
   border-radius: 50%;
   pointer-events: none;
 }
+
 .balloon-wrapper {
   position: relative;
 }
 
 .balloon-wrapper.high {
-  top: -60px;
+  top: clamp(-50px, -10vw, -60px);
 }
+
 .balloon-wrapper:nth-child(1) .balloon {
   animation-duration: 3s;
   animation-delay: 0s;
@@ -141,20 +150,24 @@ h1, h2, h3 {
   animation-duration: 3.1s;
   animation-delay: 0.3s;
 }
+
 .memories-wrapper {
   position: absolute;
-  bottom: 150px;
+  bottom: clamp(50px, 10vh, 150px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   z-index: 3;
-  gap: 20px;
+  gap: clamp(10px, 2vw, 20px);
   padding: 0 1em;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .memories-button {
-  padding: 12px 24px;
-  font-size: 2em;
+  padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
+  font-size: clamp(1em, 5vw, 1.5em);
   color: #fff;
   background: linear-gradient(135deg, #00ffcc, #0066ff);
   border: none;
@@ -163,17 +176,20 @@ h1, h2, h3 {
   box-shadow: 0 0 20px rgba(0,255,200,0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: floatButton 3s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
+  white-space: nowrap;
 }
 
 .memories-button:hover {
   transform: scale(1.1);
   box-shadow: 0 0 40px rgba(0,255,200,0.9);
 }
+
 .memories-gif {
-  width: 100px;
-  height: 100px;
+  width: clamp(40px, 12vw, 80px);
+  height: clamp(40px, 12vw, 80px);
   animation: floatGif 3s ease-in-out infinite;
 }
+
 @keyframes floatButton {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
@@ -183,65 +199,132 @@ h1, h2, h3 {
   0%, 100% { box-shadow: 0 0 20px rgba(0,255,200,0.5); }
   50% { box-shadow: 0 0 30px rgba(0,255,200,0.9); }
 }
+
 @keyframes floatGif {
-  0%, 100% { transform: translateY(0px); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
-/* Адаптация под мобильные */
-@media (max-width: 600px) {
-  .letter {
-    font-size: 2.5rem;
-  }
 
-  .memories-button {
-    font-size: 0.9em;
-    padding: 10px 20px;
-  }
-
-  .memories-gif {
-    width: 50px;
-    height: 50px;
+/* Enhanced Mobile Adaptation */
+@media (max-width: 768px) {
+  body {
+    padding: 0.5em;
   }
 
   .cake {
-    width: 25vw;
+    width: clamp(12vw, 18vw, 120px);
+    top: 150px;
+  }
+
+  .balloons {
+    top: clamp(-150px, -25vw, -100px);
+    justify-content: space-evenly;
   }
 
   .balloon {
-    width: 15vw;
-    max-width: 100px;
+    width: clamp(8vw, 12vw, 80px);
+    max-width: 80px;
+  }
+
+  .letter {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .memories-wrapper {
+    bottom: clamp(30px, 8vh, 100px);
+    gap: clamp(5px, 1.5vw, 10px);
+  }
+
+  .memories-button {
+  font-size: clamp(1em, 5vw, 1.5em);
+    padding: clamp(6px, 1.5vw, 10px) clamp(12px, 3vw, 20px);
+  }
+
+  .memories-gif {
+    width: clamp(30px, 10vw, 60px);
+    height: clamp(30px, 10vw, 60px);
   }
 }
+
+@media (max-width: 480px) {
+  .top-text {
+  font-size: clamp(1em, 4vw, 1.2em);
+  }
+
+  .number {
+    font-size: clamp(2em, 7vw, 3em);
+  }
+
+  .birthday-text {
+    font-size: clamp(1.2em, 4.5vw, 1.5em);
+  }
+
+  .cake {
+    width: clamp(10vw, 15vw, 100px);
+	top: 250px;
+  }
+
+  .balloons {
+    top: clamp(-120px, -20vw, -80px);
+  }
+
+  .balloon {
+    width: clamp(6vw, 10vw, 60px);
+    max-width: 60px;
+  }
+
+  .letter {
+    font-size: clamp(1.2rem, 5vw, 2.5rem);
+  }
+
+  .memories-wrapper {
+    bottom: clamp(40px, 10vh, 150px);
+
+    gap: 10px;
+  }
+
+  .memories-button {
+  padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
+  font-size: clamp(1em, 5vw, 1.5em);
+  }
+
+  .memories-gif {
+    width: clamp(40px, 12vw, 80px);
+    height: clamp(40px, 12vw, 80px);
+  }
+}
+
+
   </style>
 </head>
 <body>
   <img src="images/birthday-cake-1.png" class="cake" alt="Birthday Cake">
 
-  <!-- Новый блок с анимацией текста -->
   <div class="container" id="container"></div>
   <div class="container" id="container2"></div>
 
-<div class="balloons">
-  <div class="balloon-wrapper">
-    <img src="images/balloon.png" class="balloon" alt="Balloon">
+  <div class="balloons">
+    <div class="balloon-wrapper">
+      <img src="images/balloon.png" class="balloon" alt="Balloon">
+    </div>
+    <div class="balloon-wrapper high">
+      <img src="images/balloon1.png" class="balloon" alt="Balloon">
+    </div>
+    <div class="balloon-wrapper high">
+      <img src="images/balloon2.png" class="balloon" alt="Balloon">
+    </div>
+    <div class="balloon-wrapper">
+      <img src="images/balloon3.png" class="balloon" alt="Balloon">
+    </div>
   </div>
-  <div class="balloon-wrapper high">
-    <img src="images/balloon1.png" class="balloon" alt="Balloon">
-  </div>
-  <div class="balloon-wrapper high">
-    <img src="images/balloon2.png" class="balloon" alt="Balloon">
-  </div>
-  <div class="balloon-wrapper">
-    <img src="images/balloon3.png" class="balloon" alt="Balloon">
-  </div>
-</div>
 
   <canvas class="fireworks"></canvas>
-<div class="memories-wrapper">
-  <img src="images/bubu1.gif" alt="bubu" class="memories-gif">
-  <a href="2.html" class="memories-button">Воспоминания</a>
-  <img src="images/bubu.gif" alt="bubu" class="memories-gif">
-</div>
+  <div class="memories-wrapper">
+    <img src="images/bubu1.gif" alt="bubu" class="memories-gif">
+    <a href="2.html" class="memories-button">Воспоминания</a>
+    <img src="images/bubu.gif" alt="bubu" class="memories-gif">
+  </div>
+
 <script>
   const text = "С Днём Рождения!";
   const text2 = "16";
@@ -305,13 +388,17 @@ h1, h2, h3 {
 
   animateText(text, container, 0);
   animateText(text2, container2, text.length * 200 + 500);
-</script>
 
-<script>
+  // Adjust canvas size on window resize for mobile
   const canvas = document.querySelector('.fireworks');
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
   let rockets = [];
   let particles = [];
@@ -361,7 +448,6 @@ h1, h2, h3 {
         particles.splice(i, 1);
         return;
       }
-      // Проверяем, что цвет корректен
       try {
         const rgb = hexToRgb(p.color);
         ctx.fillStyle = `rgba(${rgb},${p.alpha})`;
@@ -377,10 +463,9 @@ h1, h2, h3 {
   }
 
   function hexToRgb(hex) {
-    // Проверяем, что hex - строка и начинается с #
     if (typeof hex !== 'string' || !hex.startsWith('#')) {
       console.warn('Invalid hex color:', hex);
-      return '255,255,255'; // Белый цвет по умолчанию
+      return '255,255,255';
     }
     try {
       const bigint = parseInt(hex.slice(1), 16);
@@ -390,7 +475,7 @@ h1, h2, h3 {
       return `${r},${g},${b}`;
     } catch (e) {
       console.warn('Error parsing hex color:', hex);
-      return '255,255,255'; // Белый цвет по умолчанию
+      return '255,255,255';
     }
   }
 
