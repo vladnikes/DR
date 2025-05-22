@@ -205,9 +205,6 @@ h1, h2, h3 {
   50% { transform: translateY(-6px); }
 }
 
-
-
-/* Enhanced Mobile Adaptation */
 @media (max-width: 768px) {
   body {
     padding: 0.5em;
@@ -238,7 +235,7 @@ h1, h2, h3 {
   }
 
   .memories-button {
-  font-size: clamp(1em, 5vw, 1.5em);
+    font-size: clamp(1em, 5vw, 1.5em);
     padding: clamp(6px, 1.5vw, 10px) clamp(12px, 3vw, 20px);
   }
 
@@ -250,7 +247,7 @@ h1, h2, h3 {
 
 @media (max-width: 480px) {
   .top-text {
-  font-size: clamp(1em, 4vw, 1.2em);
+    font-size: clamp(1em, 4vw, 1.2em);
   }
 
   .number {
@@ -263,7 +260,7 @@ h1, h2, h3 {
 
   .cake {
     width: clamp(10vw, 15vw, 100px);
-	top: 200px;
+    top: 200px;
   }
 
   .balloons {
@@ -281,13 +278,12 @@ h1, h2, h3 {
 
   .memories-wrapper {
     bottom: clamp(40px, 10vh, 150px);
-
     gap: 10px;
   }
 
   .memories-button {
-  padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
-  font-size: clamp(1em, 5vw, 1.5em);
+    padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
+    font-size: clamp(1em, 5vw, 1.5em);
   }
 
   .memories-gif {
@@ -295,8 +291,6 @@ h1, h2, h3 {
     height: clamp(40px, 12vw, 80px);
   }
 }
-
-
   </style>
 </head>
 <body>
@@ -304,11 +298,9 @@ h1, h2, h3 {
 
   <div class="container" id="container"></div>
   <div class="container" id="container2"></div>
-<div id="lifetime-counter" style="margin-top: 2em; font-size: clamp(1.2em, 4vw, 2em); color: #00ffcc; z-index: 2;">
-  С тех пор, как ты появилась на свет: <br> <span id="days">0000</span> дней <span id="hours">00</span> часов <span id="minutes">00</span> минут <span id="seconds">00</span> секунд
-</div>
-
-
+  <div id="lifetime-counter" style="margin-top: 2em; font-size: clamp(1.2em, 4vw, 2em); color: #00ffcc; z-index: 2;">
+    С тех пор, как ты появилась на свет: <br> <span id="days">0000</span> дней <span id="hours">00</span> часов <span id="minutes">00</span> минут <span id="seconds">00</span> секунд
+  </div>
 
   <div class="balloons">
     <div class="balloon-wrapper">
@@ -333,7 +325,7 @@ h1, h2, h3 {
   </div>
   <script>
 function updateLifetimeCounter() {
-  const birthDate = new Date(2009, 4, 23); // Месяцы с 0 (май — это 4)
+  const birthDate = new Date(2009, 4, 23, 7, 15); // Updated to May 23, 2009, 7:15 AM
   const now = new Date();
   const diff = now - birthDate;
 
